@@ -1,0 +1,16 @@
+.main-title {
+    font-family: Calibri;
+    user-select: none;
+    font-size: 5em;
+    font-weight: bold;
+    text-shadow: 0.075em 0.075em #0003;
+    text-anchor: middle;
+    vertical-align: middle;
+    text-align: center;
+    color: wheat;
+    margin-inline: 0.15em;
+}
+
+.main-title::first-letter {
+    color: #106fdb;
+}

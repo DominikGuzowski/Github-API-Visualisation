@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  app:
+    image: node:16
+    ports: 
+    - 4050:3000
+    working_dir: /dev/gitapi
+    volumes:
+      - .:/dev/gitapi
+    command: >
+              sh -c "npm start"
