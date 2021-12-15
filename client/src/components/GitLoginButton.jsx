@@ -2,11 +2,10 @@ import React from 'react'
 import { authentication } from "../service/Authentication";
 import "../css/GitHubLoginButton.css";
 import {FaGithub} from "react-icons/fa";
-export const GitLoginButton = ({getData}) => {
+export const GitLoginButton = ({onClick}) => {
 
     const handleAuthentication = async () => {
-        const auth = await authentication();
-        getData?.(auth);
+        authentication().then(auth => onClick?.(auth));
     }
 
     return (

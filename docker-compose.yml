@@ -3,9 +3,10 @@ services:
   app:
     image: node:16
     ports: 
-    - 4050:3000
+    - 3000:3000
+    - 5000:5000
     working_dir: /dev/gitapi
     volumes:
       - .:/dev/gitapi
     command: >
-              sh -c "npm start"
+              sh -c "npm i --save concurrently -g && yarn dev"

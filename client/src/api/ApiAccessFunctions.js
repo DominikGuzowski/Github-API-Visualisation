@@ -1,69 +1,138 @@
-import React from 'react';
+import axios from 'axios';
 
+const user = () => {
+    return sessionStorage.getItem("gmv_usr_inf");
+}
 
-export const useGitUser = (userGitName = '') => {
-    const reducFunction = (previousState, userName) => {
-        if(userName.length === 0) return previousState;
-        let userData = null;
-        let userRepos = null;
-        fetch(`https://api.github.com/users/${userName}`)
-              .then((res) => res.json())
-              .then((data) => {
-                  userData = data;
-              });
-        fetch(`https://api.github.com/users/${userName}/repos`)
-        .then((res) => res.json())
-        .then((data) => {
-            userRepos = data;
-        });
-        if(userData && userRepos && Object.keys(userData).length !== 0 && Object.keys(userRepos).length !== 0) {
-            return {user: userData, repos: userRepos}
+const getToken = () => {
+    return sessionStorage.getItem("gmv_api_tkn");
+}
+
+const validate = (token = getToken(), username = user()) => {
+    return (token || "").startsWith("gho_") && (username || "").length > 0;
+}
+
+const fetchGitHubData = async (url, {validated, token}) => {
+    if(validated) {
+        try {
+            const {data} = await axios({
+                url,
+                ...headers(token)
+            });
+            return {success: data};
+        } catch(err) {
+            return {error: err.message};
         }
-        else return {...previousState, ...userData};
+    } else {
+        try {
+            const {data} = await axios({
+                url,
+            });
+            return {success: data};
+        } catch(err) {
+            return {error: err.message};
+        }
     }
-    let userData = null;
-    let userRepos = null;
-    if(userGitName.length !== 0) {
+}
+const headers = (token, method = "GET") => {
+    if(!token) return {};
+    return {
+        method,
+        headers: {
+            "Content": "application/json",
+            Authorization: `Bearer ${token}`,
+        }
+    };
+}
 
-        fetch(`https://api.github.com/users/${userGitName}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    userData = data;
-                });
-        fetch(`https://api.github.com/users/${userGitName}/repos`)
-        .then((res) => res.json())
-        .then((data) => {
-            userRepos = data;
-        });
-    }
-    const [gitUser, updateUser] = React.useReducer(reducFunction, {
-        user: userData ?? {},
-        repos: userRepos ?? {},
-    });
-    return [gitUser, updateUser];
-};
+const contributionsQuery = (username) => {
+    return `{ user(login: "${username}") { repositoriesContributedTo(contributionTypes:` +
+    ` [COMMIT, REPOSITORY], last: 100, includeUserRepositories: false) { pageInfo` +
+    ` { startCursor endCursor hasPreviousPage } nodes { owner { login } name }}}}`;
+}
 
+export const fetchUser = async (username = user()) => {
+    if(!username) return { error: "Error: User required."};
+    const token = getToken();
+    return await fetchGitHubData(`/users/${username}`, {validated: validate(token, username), token});
+}
 
-// const fetchUser = (user) => {
-//     fetch(`https://api.github.com/users/${user}`)
-//       .then((res) => res.json())
-//       .then(setGitJson);
-//   };
+export const fetchUserRepos = async ( repoOwner = user()) => {
+    if(!repoOwner) return { error: "Error: User required."};
+    const token = getToken();
+    return await fetchGitHubData(`/users/${repoOwner}/repos`, {validated: validate(token, repoOwner), token});
+}
 
-//   const getRepoData = (user) => {
-//     fetch(`https://api.github.com/users/${user}/repos`)
-//       .then((res) => res.json())
-//       .then(setGitJson);
-//   };
+export const fetchUserContributions = async (username = user()) => {
+    const token = getToken();
+    if(validate(token, username)) {
+        try {
+            const { data: { data: { user: { repositoriesContributedTo: { nodes: contributions }} } } } = await axios({
+                url: "/graphql",
+                ...headers(token, "POST"),
+                data: {
+                    query: contributionsQuery(username)
+                }
+            });
 
-//   const getCommits = (user, repoName) => {
-//     fetch(`https://api.github.com/repos/${user}/${repoName}/commits`)
-//       .then((res) => res.json())
-//       .then(setGitJson);
-//   };
+            return { success: { username, contributions } };
+        } catch (err) {
+            return { error: err.message };
+        }
+    } 
+    return {error: "Access Denied: Login required."};
 
-//   const getBranches = (user, repoName) => {
-//     fetch(`https://api.github.com/repos/${user}/${repoName}/branches`)
-//       .then((res) => res.json())
-//       .then(setGitJson);
-//   };
+}
+
+export const fetchRepoCommits = async (repoName, username = user()) => {
+    if(!username) return { error: "Error: User required."};
+    if(!repoName) return { error: "Error: Repository name required."};
+    const token = getToken();
+    return await fetchGitHubData(`/repos/${username}/${repoName}/commits`, {validated: validate(token, username), token});
+}
+
+export const fetchStarred = async (username = user()) => {
+    if(!username) return { error: "Error: User required."};
+    const token = getToken();
+    return await fetchGitHubData(`/users/${username}/starred`, {validated: validate(token, username), token});
+}
+
+export const fetchFollowers = async (username = user()) => {
+    if(!username) return { error: "Error: User required."};
+    const token = getToken();
+    return await fetchGitHubData(`/users/${username}/followers`, {validated: validate(token, username), token});
+}
+
+export const fetchFollowing = async (username = user()) => {
+    if(!username) return { error: "Error: User required."};
+    const token = getToken();
+    return await fetchGitHubData(`/users/${username}/following`, {validated: validate(token, username), token});
+}
+
+export const fetchRepoBranches = async (repoName, repoOwner = user()) => {
+    if(!repoOwner) return { error: "Error: User required."};
+    if(!repoName) return { error: "Error: Repository name required."};
+    const token = getToken();
+    return await fetchGitHubData(`/repos/${repoOwner}/${repoName}/branches`, {validated: validate(token, repoOwner), token});
+}
+
+export const fetchRepoCollaborators = async (repoName, repoOwner = user()) => {
+    if(!repoOwner) return { error: "Error: User required."};
+    if(!repoName) return { error: "Error: Repository name required."};
+    const token = getToken();
+    return await fetchGitHubData(`/repos/${repoOwner}/${repoName}/collaborators`, {validated: validate(token, repoOwner), token});
+}
+
+export const fetchRepoContributers = async (repoName, repoOwner = user()) => {
+    if(!repoOwner) return { error: "Error: User required."};
+    if(!repoName) return { error: "Error: Repository name required."};
+    const token = getToken();
+    return await fetchGitHubData(`/repos/${repoOwner}/${repoName}/contributers`, {validated: validate(token, repoOwner), token});
+}
+
+export const fetchRepoLanguages = async (repoName, repoOwner = user()) => {
+    if(!repoOwner) return { error: "Error: User required."};
+    if(!repoName) return { error: "Error: Repository name required."};
+    const token = getToken();
+    return await fetchGitHubData(`/repos/${repoOwner}/${repoName}/languages`, {validated: validate(token, repoOwner), token});
+}

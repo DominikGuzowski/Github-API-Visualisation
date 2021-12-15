@@ -12,21 +12,22 @@ export const authentication = async () => {
       const token = credential.accessToken;
       const user = result.user;
       sessionStorage.setItem("gmv_api_tkn", token);
-      sessionStorage.setItem("gmv_usr_inf", JSON.stringify(user));
-      return {user, token};
+      sessionStorage.setItem("gmv_usr_inf", result._tokenResponse.screenName);
+      //return {user, token};
+      return true;
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.email;
       const credential = GithubAuthProvider.credentialFromError(error);
-      return {errorCode, errorMessage, email, credential};
+      console.error(error);
+      //return {errorCode, errorMessage, email, credential};
+      return false;
     });
 }
 export const signout = async () => {
     signOut(auth)
     .then(() => {
-      console.log("signed out successfully");
-    }).catch((error) => {
-      console.error(error);
-    });
+      sessionStorage.clear();
+    }).catch(console.error);
 }

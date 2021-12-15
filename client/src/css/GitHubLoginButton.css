@@ -10,6 +10,7 @@
 }
 
 .github-login-button {
+    user-select: none;
     font-size: 90%;
     padding: 0.5em 0.75em;
     display: flex;
@@ -38,7 +39,8 @@
 }
 
 .github-login-button:focus-visible {
-    box-shadow: 0 0 0 0.125em black;
+    box-shadow: 0 0 0 0.125em white;
+    background-color: #008dd3;
 }
 .github-login-button:active {
     background-color: var(--clr-active);

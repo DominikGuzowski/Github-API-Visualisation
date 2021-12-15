@@ -1,18 +1,19 @@
 
 body {
-    background-color: #222229;
+    --bg-clr: rgb(13, 17, 23);
+    background-color: #123;
     overflow-x: hidden;
 }
 
 .bg-circle {
-    position: absolute;
+    position: fixed;
     pointer-events: none;
-    opacity: 0.05;
+    opacity: 0.1;
     border-radius: 100vw;
     z-index: -1;
     background-color: var(--circle-clr);
     box-shadow: 0 0 0.25em 0.25em var(--circle-clr);
-    /* animation: move-c 20s infinite; */
+    animation: move-c 20s forwards infinite;
     transform: translateX(3em);
 }
 
@@ -62,7 +63,7 @@ body {
 .circle-clr-yellow {
     --circle-clr: #fbff08;
 }
-/* @keyframes move-c {
+@keyframes move-c {
     from { transform: rotate(0deg) translateX(3em) rotate(0deg); }
     to   { transform: rotate(360deg) translateX(3em) rotate(-360deg); }
-} */
+}
