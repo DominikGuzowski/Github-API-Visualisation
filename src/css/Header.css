@@ -1,0 +1,48 @@
+header {
+    font-family: Calibri;
+    min-height: 4em;
+    background-color: #161b22;
+    /* box-shadow: 0 0.125em 0.2em 0.125em #2226; */
+    /* min-width: 99vw; */
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10%;
+    padding-inline: 1em 2em;
+    border-bottom: 1px solid #30363d;
+}
+
+/* header::after {
+    content: attr(aria-label);
+    color:#fff2;
+    position: absolute;
+    right: 2.5%;
+    font-weight: bold;
+    font-style: italic;
+    bottom: -0.09em;
+    overflow-y: hidden;
+    font-size: 3.5em;
+} */
+
+/* 
+header input {
+    outline: none;
+    width: 15em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    border: 0.125em #333 solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header input:placeholder-shown {
+    font-style: italic;
+    font-weight: bold;
+} */
+
