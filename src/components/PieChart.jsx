@@ -3,8 +3,12 @@ import { PieChart as PieGraph, Pie, Sector, Cell, ResponsiveContainer, Tooltip, 
 import "../css/piechart.css"
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF49A9', '#FF2042', '#AA80FF', '#20CC48', '#FFEE10'];
 
-export const PieChart = ({dataSet, valueKey, total}) => {
+export const PieChart = ({dataSet: data, valueKey, total}) => {
+    const [dataSet, setData] = React.useState([]);
 
+    React.useEffect(() => {
+        setData(data);
+    }, [data]);
     const [activeIndex, setActiveIndex] = React.useState(null);
     const onMouseEnter = React.useCallback((data, index) => {
       setActiveIndex(index);
@@ -52,7 +56,7 @@ export const PieChart = ({dataSet, valueKey, total}) => {
         percent = percent < 0.1 ? 0.1 : percent;
         return `${entry.name}: ${total? percent.toFixed(1) + "%":""}`;
     }
-    if(!dataSet)  return (
+    if(!dataSet || dataSet.length === 0)  return (
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
     return <ResponsiveContainer width="99%" aspect={1.5}>
@@ -63,7 +67,7 @@ export const PieChart = ({dataSet, valueKey, total}) => {
             cx="50%"
             cy="50%"
             label={labelPercent}
-            outerRadius={'70%'}
+            outerRadius={'60%'}
             fill="#8884d8"
             dataKey={valueKey}
             activeShape={hoverSector}
@@ -71,6 +75,7 @@ export const PieChart = ({dataSet, valueKey, total}) => {
             onMouseLeave={onMouseLeave}
             activeIndex={activeIndex}
             isAnimationActive={false}
+            fontWeight={400}
         >
             {dataSet.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}>{entry.name}</Cell>

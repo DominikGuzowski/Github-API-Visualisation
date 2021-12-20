@@ -51,7 +51,7 @@
     text-decoration: none;
     color: white;
     font-size: 1.3em;
-    margin-top: 0.125em;
+    margin-top: 0.15em;
 }
 .repo-listing {
     display: inline-flex;
@@ -59,7 +59,7 @@
     gap: 1em;
     align-items: center;
     color: white;
-    padding-inline: 0.5em;
+    padding-inline: 0.75em 0.5em;
     height: 2em;
     margin-block: 0.25em;
     /* border: 1px solid red; */
@@ -67,8 +67,8 @@
 
 .repo-button {
     outline: none;
+    flex: 1 1;
     border:none;
-    text-overflow: ellipsis;
     font-size: 1em;
     color: white;
     border-radius: 0.25em;
@@ -76,8 +76,12 @@
     padding: 0.25em 0.75em;
     user-select: none;
     box-shadow: 0.125em 0.125em 0.2em 0em #0006;
+    text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
 }
 
 .repo-button:hover {
@@ -99,4 +103,29 @@
     padding-bottom: 0.5em;
     text-align: center;
     border-bottom: 1px #30363d solid;
+    margin-bottom: 0.5em;
+    position: relative;
+}
+
+.aside-title.loading::before, .aside-title.loading::after {
+    content: '';
+    position: absolute;
+    top: 0.5em;
+    left: 7.5%;
+    margin: auto;
+    width: 0.35em;
+    background-color: #f0f6fc;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    animation: loop 2s infinite;
+}
+
+
+.aside-title.loading::after {
+    animation-delay: 0.4s;
+}
+
+@keyframes loop {
+    from { transform: rotate(630deg) translateX(0.5em) rotate(-630deg); }
+    to   { transform: rotate(270deg) translateX(0.5em) rotate(270deg); }
 }

@@ -1,0 +1,30 @@
+.arrow-button {
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25em;
+    aspect-ratio: 1;
+    border-radius: 0.25em;
+    color: white;
+    background-color: #238636;
+    border: none;
+    font-size: 1.1em;
+    transition: background-color 100ms;
+    box-shadow: 0.1em 0.1em 0.2em 0.1em #0003;
+    margin: 0.25em 1em;
+}
+
+.arrow-button:hover {
+    cursor: pointer;
+    background-color: #2ea043;
+}
+
+.arrow-button:focus-visible {
+    background-color: #008dd3;
+    box-shadow: 0 0 0 0.125em white;
+}
+
+.arrow-button:active {
+    background-color: #36b850;
+}

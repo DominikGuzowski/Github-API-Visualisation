@@ -16,8 +16,6 @@ const App = () => {
   React.useEffect(() => {
     if((sessionStorage.getItem("gmv_api_tkn")||"").startsWith("gho_") && sessionStorage.getItem("gmv_usr_inf")) {
       setAuth(true);
-      console.log(auth.currentUser)
-
     } else setAuth(false);
     // return signout();
   }, []);

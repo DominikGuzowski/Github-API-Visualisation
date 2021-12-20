@@ -1,0 +1,24 @@
+.custom-tooltip {
+    font-family: Calibri;
+    padding: 0.5em;
+    background-color: #fffb;
+    border: 1px #888 solid;
+    border-radius: 0.175em;
+    display: flex;
+    flex-flow: column;
+    white-space: pre-wrap;
+    max-width: 15em;
+    font-weight: normal;
+    color: black;
+    box-shadow: 0.1em 0.1em 0.2em 0em #2228;
+}
+
+.custom-tooltip .label {
+    font-weight: bold;
+    border-bottom: 1px #222 solid;
+    margin-bottom: 0.5em;
+}
+
+.hover-zis:hover {
+    cursor: pointer;
+}

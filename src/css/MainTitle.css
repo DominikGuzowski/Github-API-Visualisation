@@ -17,3 +17,9 @@
 header .main-title::first-letter {
     color: #238636;
 }
+
+@media (max-width: 1100px) {
+    .main-title {
+        display: none;
+    }
+}

@@ -2,17 +2,15 @@ import React from 'react';
 import { RadarChart } from "./RadarChart";
 import "../css/styles.css";
 
-export const Contributions = ({contributions, currentUser}) => {
-    if(contributions.length !== 0) return <h3>Hmm, seems there are no contributions, huh?</h3>;
+export const Contributions = ({contributedRepos, currentUser, onUserSelect, onSelect, contributors}) => {
+    if(!contributedRepos || contributedRepos.length === 0) return <h3>Hmm, seems there are no contributions, huh?</h3>;
     return (
-        <div>
-            <select className='select-contribs' >
-                <option className="contrib-options" value="" disabled selected>Select repository</option>
-                <option className="contrib-options" value="a">A</option>
-                <option className="contrib-options" value="b">B</option>
-                <option className="contrib-options" value="c">C</option>
+        <>
+            <select className='select-contribs' defaultValue="" onChange={(e) => {onSelect?.(JSON.parse(e.target.value))}}>
+                <option className="contrib-options" value="" disabled>Select a repository</option>
+                {contributedRepos.map((x, i) => <option key={x.name+i} value={JSON.stringify({owner: x.owner.login, repo: x.name})}>{x.name}</option>)}
             </select>
-            {/* <RadarChart onUserSelect={e => console.log(e)} currentUser={currentUser} dataSet={contributions} radarName="Contributions" polarAxis="login" dataKey="contributions"/> */}
-        </div>
+            <RadarChart onUserSelect={e => onUserSelect?.(e)} currentUser={currentUser} dataSet={contributors} radarName="Contributions" polarAxis="login" dataKey="contributions"/>
+        </>
     )
 }

@@ -1,7 +1,6 @@
 import { getAuth, signOut, signInWithPopup, GithubAuthProvider } from "firebase/auth";
-import { githubProvider } from "../config/Provider";
 import firebase from "../config/FirebaseConfig";
-
+const githubProvider = new GithubAuthProvider();
 
 export const auth = getAuth(firebase);
 export const authentication = async () => {

@@ -1,11 +1,12 @@
 import React from 'react';
 import "../css/MainPage.css";
-export const ContentPane = ({header, children}) => {
+export const ContentPane = ({header, children, isLoading}) => {
     return (
         <div className='content-pane'>
-            <div className='content-pane-header' style={{color:"white"}}>{header}</div>
+            <div className={`content-pane-header${isLoading ? " loading" : ""}`}><span>{header}</span></div>
             <div className='content-pane-body'>
-                {children}  
+                {isLoading ? <div className='loading-animation'>Fetching data...</div> : children}
+                {/* // {children}   */}
             </div>
         </div>
     );

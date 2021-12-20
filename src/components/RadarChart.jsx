@@ -1,10 +1,21 @@
 import React from 'react';
-import { Radar, RadarChart as RadarGraph, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Text } from 'recharts';
-import { GitLink } from './GitLink';
+import { Radar, RadarChart as RadarGraph, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
-export const RadarChart = ({dataSet, polarAxis, radarName, dataKey, onUserSelect, currentUser}) => {
-    console.log(dataSet)
-    const customLabel = ({ payload, x, y, textAnchor, stroke, radius, index }) => {
+export const RadarChart = ({dataSet, polarAxis, radarName, dataKey, onUserSelect, currentUser, customColor}) => {
+    const CustomTooltip = ({ payload }) => {
+        if (payload && payload.length) {
+          return (
+            <div className="custom-tooltip">
+              <span className="label" style={{textAlign:"center"}}>{`${payload[0].payload.login}`}</span>
+              <span style={{color:customColor||"#238636", fontWeight:"bold"}}>Contributions: {payload[0].value}</span>
+
+            </div>
+          );
+        }
+        
+        return null;
+      };
+    const customLabel = ({ payload, x, y, textAnchor, stroke, radius }) => {
         return (
             <g className="recharts-layer recharts-polar-angle-axis-tick">
                 <text
@@ -16,27 +27,27 @@ export const RadarChart = ({dataSet, polarAxis, radarName, dataKey, onUserSelect
                 text-anchor={textAnchor}
                 >
                     <tspan x={x} dy="0em">
-                            <a style={{fill:"white", fontWeight:"normal"}} href={`https://github.com/${payload.value}`} 
+                            {payload.value !== currentUser.login ? <a style={{fill:"white", fontWeight:"normal"}} href={`https://github.com/${payload.value}`} 
                             rel="noreferrer" target="_blank" onClick={(e) => {
                                 e.preventDefault();
-                                if(payload.value !== currentUser) onUserSelect?.(payload.value);
-                            }}>{payload.value}</a>
+                                onUserSelect?.(payload.value);
+                            }}>{payload.value}</a> : <tspan fill={customColor||"#2ea043"} fontWeight="normal">{payload.value}</tspan>}
                     </tspan>
                 </text>
         </g>);
     }
 
-    if(!dataSet)  return (
+    if(!dataSet || dataSet.length === 0)  return (
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
     return (
         <ResponsiveContainer width={'99%'} aspect={1.6}>
             <RadarGraph outerRadius="80%" data={dataSet}>
                 <PolarGrid />
-                <PolarAngleAxis tick={customLabel} dataKey={polarAxis} fontWeight={400} fontSize={'calc(0.5vw + 0.5em)'} stroke='#fff'/>
+                <PolarAngleAxis tick={customLabel} dataKey={polarAxis} fontWeight={400} />
                 <PolarRadiusAxis angle={90 - (360/dataSet.length)} fontWeight={400} />
-                <Tooltip separator=': '/>
-                <Radar name={radarName} dataKey={dataKey} stroke="#238636" fill="#238636" fillOpacity={0.3} />
+                <Tooltip content={<CustomTooltip />}/>
+                <Radar name={radarName} dataKey={dataKey} stroke={customColor||"#238636"} fill={customColor||"#238636"} fillOpacity={0.3} />
             </RadarGraph>
         </ResponsiveContainer>
     );

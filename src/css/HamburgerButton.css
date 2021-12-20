@@ -1,0 +1,56 @@
+
+#hamburger {
+    cursor: pointer;
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 15px;
+    border-top: 6px solid #ffab2c;
+    border-bottom: 6px solid #ffab2c;
+    border-radius: 6px;
+    transition: height 400ms cubic-bezier(0.35, -3, 0.65, 3),
+        transform 400ms cubic-bezier(0.35, -3, 0.65, 3);
+    transform-origin: center;
+    overflow: hidden;
+}
+
+#hamburger.squished {
+    height: 2px;
+    transform: rotate(45deg);
+}
+
+#hamburger::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 28px;
+    height: 14px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+        rgb(255, 0, 0) 15%,
+        rgb(255, 255, 0) 15%,
+        rgb(255, 255, 0) 30%,
+        rgb(95, 45, 14) 30%,
+        rgb(95, 45, 14) 75%,
+        rgb(252, 211, 122) 75%,
+        rgb(252, 211, 122) 85%,
+        rgb(78, 161, 10) 85%
+    );
+    border-radius: 3px;
+    opacity: 1;
+}
+
+#hamburger::after {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    content: "";
+    top: -3px;
+    right: 15px;
+    width: 0px;
+    height: 0px;
+    border-top: 4px yellow solid;
+    border-left: 4px transparent solid;
+    border-right: 4px transparent solid;
+}
