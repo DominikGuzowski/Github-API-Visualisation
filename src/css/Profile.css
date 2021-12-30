@@ -1,3 +1,11 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+}
+
 .profile-wrapper {
     display:flex;
     flex-flow:row;
@@ -27,6 +35,25 @@
     text-align: center;
 }
 
+.profile-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.profile-column {
+    border-top: 1px solid #30363d;
+    margin-top: 0.5em;
+    padding-top: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
 .profile-right {
     color: white;
     font-weight: normal;
@@ -40,6 +67,17 @@
 
 .profile-right a {
     color: #008dd3;
+}
+
+.profile-bottom {
+    overflow-x: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-bottom::-webkit-scrollbar {
+    background-color: transparent;
 }
 
 @media (max-width: 720px) {
@@ -56,4 +94,37 @@
         border-bottom: 1px solid #30363d;
         margin-bottom: 1em;
     }
+
+    .profile-bottom {
+        margin-top: 1em;
+        max-width: 75vw;
+        justify-content: flex-start;
+        overflow-x: scroll;
+        padding: 1em 5em 0em 5em;
+    }
+}
+
+.year-button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #6e7681;
+    padding: 0.5rem 1rem;
+    border-radius: 0.45rem;
+    margin: 0 0.25rem 0 0.25rem;
+}
+
+.year-button:not(:disabled):hover {
+    cursor: pointer;
+    background-color: #161b22;
+}
+
+.year-button:disabled {
+    background-color: #1f6feb;
+    color:white;
+}
+
+.year-button:not(:disabled):focus-visible {
+    background-color: #161b22;
+    box-shadow: 0 0 0 0.075rem #f0f3f5;
 }

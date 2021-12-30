@@ -1,0 +1,22 @@
+.ratings {
+    display: flex;
+    border-top: 1px solid #30363d;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating .star-rating {
+    margin-top: 0;
+}
+
+.rating h3 {
+    margin-bottom: 0.25rem;
+}

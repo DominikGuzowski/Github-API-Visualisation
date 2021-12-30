@@ -41,7 +41,7 @@ export const RadarChart = ({dataSet, polarAxis, radarName, dataKey, onUserSelect
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
     return (
-        <ResponsiveContainer width={'99%'} aspect={1.6}>
+        <ResponsiveContainer width={'95%'} aspect={1.6}>
             <RadarGraph outerRadius="80%" data={dataSet}>
                 <PolarGrid />
                 <PolarAngleAxis tick={customLabel} dataKey={polarAxis} fontWeight={400} />

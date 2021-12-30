@@ -1,0 +1,57 @@
+.toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px #464f58;
+    background-color: transparent;
+    color: #f0f6fc;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+
+.toggle-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: fit-content;
+    gap: 0.25rem;
+    font-weight: normal;
+}
+
+.toggle-switch {
+    width: 3rem;
+    height: 1.5rem;
+    border-radius: 3rem;
+    box-shadow: 0 0 0 0.075rem #f0f6fc;
+    position: relative;
+    transition: background-color 200ms linear;
+}
+.toggle-switch.on {
+    background-color: #1c6b2c;
+}
+.toggle-switch:hover {
+    cursor: pointer;
+}
+.toggle-switch::after {
+    content: "";
+    transition: transform 200ms linear;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+    background-color: #f0f6fc;
+}
+
+.toggle-switch.on::after {
+    transform: translateX(0.75rem);
+}
+
+.toggle-switch.off::after {
+    transform: translateX(-0.75rem);
+}

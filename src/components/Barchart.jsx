@@ -2,26 +2,27 @@ import React from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell} from 'recharts';
 import "../css/Tooltip.css";
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF49A9', '#FF2042', '#20CC48', '#AA80FF', '#FFEE10'];
-
-export const Barchart = ({dataSet, dataKey, xAxis}) => {
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-          return (
-            <div className="custom-tooltip">
-              <span className="label" style={{textAlign:"center"}}>{`${label}`}</span>
-              <span style={{color:"#000", fontWeight:"normal"}}>Commits: {payload[0].value}</span>
-            </div>
-          );
-        }
-      
-        return null;
-      };
-    if(!dataSet || dataSet.length === 0) return <h1 style={{color:"#aaa"}}>No data available</h1>;
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
     return (
-        <ResponsiveContainer width="99%" aspect={1.5}>
+      <div className="custom-tooltip">
+        <span className="label" style={{textAlign:"center"}}>{`${label}`}</span>
+        <span style={{color:"#000", fontWeight:"normal"}}>Commits: {payload[0].value}</span>
+      </div>
+    );
+  }
+
+  return null;
+};
+export const Barchart = ({dataSet, dataKey, xAxis}) => {
+    
+    if(!dataSet || dataSet.length === 0) return <div>
+        <h1 style={{color:"#aaa"}}>No data available</h1>
+        <h6>Select a repo or if you already did consider a different one!</h6>
+    </div>;
+    return (
+        <ResponsiveContainer width="95%" aspect={1.5}>
             <BarChart
-            width={500}
-            height={300}
             data={dataSet}
             barSize={25}
             fontWeight={400}

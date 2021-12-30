@@ -15,7 +15,7 @@
     margin: 0.25em 1em;
 }
 
-.arrow-button:hover {
+.arrow-button:not(:disabled):hover {
     cursor: pointer;
     background-color: #2ea043;
 }
@@ -27,4 +27,9 @@
 
 .arrow-button:active {
     background-color: #36b850;
+}
+
+.arrow-button:disabled {
+    cursor: normal !important;
+    background-color: #464f58 !important;
 }

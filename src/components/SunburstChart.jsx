@@ -23,7 +23,7 @@ export const SunburstChart = ({dataSet, dataKey, username, onClick}) => {
 
     if(!dataSet || dataSet.length === 0) return <h1 style={{color:"#aaa"}}>No data available</h1>;
     return (
-    <ResponsiveContainer width="99%" aspect={1.5}>
+    <ResponsiveContainer width="95%" aspect={1.5}>
     <PieChart>
         <text x='50%' y='50%' textAnchor="middle" fontSize={12} dominantBaseline="middle" fill="white">
             {username}

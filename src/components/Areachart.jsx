@@ -14,12 +14,15 @@ export const Areachart = ({data, dataKeyOne, dataKeyTwo, xAxisKey}) => {
             </div>
           );
         }
-      
+       
         return null;
       };
-    if(!data || data.length === 0) return <h1 style={{color:"#aaa"}}>No data available</h1>;
+    if(!data || data.length === 0) return <div>
+        <h1 style={{color:"#aaa"}}>No data available</h1>
+        <h6>Select a repo or if you already did consider a different one!</h6>
+    </div>;
     return (
-        <ResponsiveContainer width='99%' aspect={1.5}>
+        <ResponsiveContainer width='95%' aspect={1.5}>
             <AreaChart width={730} height={250} data={data}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >

@@ -1,7 +1,6 @@
 .main-title {
     font-family: Calibri;
-    user-select: none;
-    font-size: 5em;
+    font-size: 3rem;
     font-weight: bold;
     text-shadow: 0.075em 0.075em #0003;
     text-anchor: middle;
@@ -17,9 +16,30 @@
 header .main-title::first-letter {
     color: #238636;
 }
+.main-title-wrapper {
+    user-select: none;
+    display: flex;   
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.125rem;
+}
 
+header .main-title-wrapper {
+    cursor: pointer;
+}
 @media (max-width: 1100px) {
+    .main-title-wrapper {
+        gap: 0;
+    }
+
     .main-title {
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 4rem;
+    }
+    header .main-title-wrapper {
         display: none;
     }
 }
+

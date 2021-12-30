@@ -30,6 +30,7 @@
     transition: background-color 100ms;
     vertical-align:middle;
     box-shadow: 0.1em 0.1em 0.2em 0.1em #0003;
+    min-width: max-content;
 }
 
 .github-login-button:hover,

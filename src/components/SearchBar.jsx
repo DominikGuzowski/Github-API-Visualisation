@@ -5,7 +5,8 @@ export const SearchBar = ({onClick}) => {
     const [data, setData] = React.useState("");
     return (
         <div className='search-bar'>
-            <input className='search-input' onChange={(e) => {
+            <div id="error-message" disabled={false}>{(data.length > 0 && (`User '${data}' was not found.`)) || "Please enter a user name."}</div>
+            <input id="#firstContent" className='search-input' onChange={(e) => {
                 setData(e.target.value)
             }} placeholder='Search user on GitHub' onKeyPress={(e) => {
                 if(e.key === "Enter") {

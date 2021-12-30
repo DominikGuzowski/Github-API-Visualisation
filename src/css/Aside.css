@@ -14,6 +14,7 @@
     flex-flow: column;
     flex-wrap: nowrap;
     overflow: hidden;
+    transition: transform 200ms ease-out;
 }
 
 .aside-list {
@@ -44,7 +45,12 @@
 }
 @media (max-width: 1150px) {
     .aside {
-        display: none;
+        transform: translateX(-100%);
+        min-width: 20rem;
+        max-width: 20rem;
+    }
+    .aside.visible {
+        transform: translateX(0%);
     }
 }
 .git-link {
@@ -128,4 +134,25 @@
 @keyframes loop {
     from { transform: rotate(630deg) translateX(0.5em) rotate(-630deg); }
     to   { transform: rotate(270deg) translateX(0.5em) rotate(270deg); }
+}
+
+
+.fetch-more-btn {
+    outline: none;
+    border: none;
+    background-color: #161b22;
+    padding: 0.5rem 1rem;
+    border-radius: 0.45rem;
+    font-weight: normal;
+    max-width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f0f6fc;
+    align-self: center;
+}
+
+.fetch-more-btn:hover, .fetch-more-btn:focus-visible {
+    cursor: pointer;
+    background-color: #30363d;
 }

@@ -4,6 +4,7 @@ body {
 .main-wrapper {
     display: flex;
     flex-flow: row;
+    overflow: hidden;
 }
 .main-page {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";;
@@ -20,6 +21,7 @@ body {
     flex-flow: column;
     /* border: 1px yellow solid; */
     padding-block: 4em 2em;
+    overflow: hidden;
 }
 
 .main-header-section {
@@ -27,6 +29,8 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1em 1em 0em 1em;
+    min-height: fit-content;
+    /* overflow: hidden; */
 }
 
 .main-split {
@@ -48,6 +52,8 @@ body {
     flex-grow: 0;
     display: flex;
     flex: 1;
+    flex-basis: 50%;
+    flex-shrink: 1;
     flex-wrap: wrap;
     flex-flow: column;
     justify-content: flex-start;
@@ -80,7 +86,8 @@ body {
     box-shadow: 0 0 0 1px #30363d;
     font-weight: bold;
     width: 100%;
-    max-width: 100%;
+    max-width: 90vw;
+    overflow: hidden;
 }
 
 .content-pane > *:first-child {
@@ -91,7 +98,7 @@ body {
 } */
 .content-pane-body {
     /* border: 1px purple solid; */
-    padding: 0em 2em 1em 2em;
+    padding: 0em 0em 1em 0em;
     white-space:pre-wrap;
     /* flex-basis: 100%; */
     text-overflow: ellipsis;
@@ -101,6 +108,8 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+    overflow: visible;
+    max-width: 100%;
 
 }
 .content-pane-header {
@@ -193,3 +202,74 @@ body {
     from { transform: rotate(630deg) translateX(0.5em) rotate(-630deg); }
     to   { transform: rotate(270deg) translateX(0.5em) rotate(270deg); }
 }
+
+
+.toggle-button {
+    outline: none;
+    flex: 1 1;
+    border:none;
+    font-size: 1em;
+    color: white;
+    border-radius: 0.25em;
+    background-color: var(--clr-main);
+    padding: 0.25em 0.75em;
+    user-select: none;
+    box-shadow: 0.125em 0.125em 0.2em 0em #0006;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    max-width: fit-content;
+}
+
+.toggle-button:hover {
+    cursor: pointer;
+    background-color: var(--clr-hover);
+}
+
+.toggle-button:active {
+    background-color: var(--clr-active);
+}
+
+.toggle-button:focus-visible {
+    background-color: #008dd3;
+    box-shadow: 0 0 0 0.125em white;
+}
+
+
+.notif {
+    transform: translateY(-500%);
+    position: fixed;
+    top: 1.25rem;
+    left: 2rem;
+    z-index: 10000;
+    border: none;
+    outline: none;
+    background-color: #30363d;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5em 1em;
+    /* font-size: 1.05rem; */
+    animation: in-out 5s linear 1s 1 forwards;
+}
+
+.notif > code {
+    border: 1px solid #464f58;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    padding: 0.125rem 0.25rem;
+}
+@keyframes in-out {
+    0%, 100% {
+        transform: translateY(-500%);
+    }
+    10%, 90% {
+        transform: translateY(0%);
+    }
+}
+/* .skip-to-content-btn:focus-visible {
+    transform: translateX(0%);
+    box-shadow: 0 0 0 0.125rem #238636;
+} */

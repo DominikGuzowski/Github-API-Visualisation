@@ -1,13 +1,29 @@
 import React from 'react';
 import { PieChart as PieGraph, Pie, Sector, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import "../css/piechart.css"
+import "../css/piechart.css";
+import "../css/Tooltip.css";
+
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF49A9', '#FF2042', '#AA80FF', '#20CC48', '#FFEE10'];
 
 export const PieChart = ({dataSet: data, valueKey, total}) => {
     const [dataSet, setData] = React.useState([]);
 
     React.useEffect(() => {
-        setData(data);
+        if(data) {
+            let half1 = data.slice(0, data.length/2);
+            let half2 = data.slice(data.length/2, data.length).reverse();
+            let res = [];
+            while(half1.length > 0 || half2.length > 0) {
+                let a = half1.shift();
+                let b = half2.shift();
+                if(a) res.push(a);
+                if(b) res.push(b);
+                let temp = half1;
+                half1 = half2;
+                half2 = temp;
+            }
+            setData(res);
+        }
     }, [data]);
     const [activeIndex, setActiveIndex] = React.useState(null);
     const onMouseEnter = React.useCallback((data, index) => {
@@ -43,8 +59,10 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
     const CustomTooltip = ({ active, payload}) => {
         if (active && payload && payload.length) {
           return (
-              <div style={{width:"fit-content", backgroundColor:"#fffa", borderRadius:"1em", padding:"0.015em 1em"}}>
-                  <p className="label" style={{color:"black", fontWeight:"500"}}>{payload[0].name}</p>
+              <div className='custom-tooltip'>
+                  <span className="label">{payload[0].name}</span>
+                  <span><b>Size: </b>{payload[0].value} bytes</span>
+                  <span><b>Share: </b>{(payload[0].value / total * 100).toFixed(3)}%</span>
               </div>
           );
         }
@@ -59,7 +77,7 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
     if(!dataSet || dataSet.length === 0)  return (
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
-    return <ResponsiveContainer width="99%" aspect={1.5}>
+    return <ResponsiveContainer width="95%" aspect={1.5}>
         <PieGraph>
         <Pie
             stroke='none'
@@ -78,7 +96,7 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
             fontWeight={400}
         >
             {dataSet.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}>{entry.name}</Cell>
+                <Cell key={`cell-${index}`} fill={entry.color || COLORS[index % COLORS.length]}>{entry.name}</Cell>
             ))}
         </Pie>
         {/* <Legend fontWeight={400}/> */}
