@@ -4,9 +4,8 @@ services:
     image: node:16
     ports: 
     - 3000:3000
-    - 5000:5000
-    working_dir: /dev/gitapi
+    working_dir: /dev/git_api_vis
     volumes:
-      - .:/dev/gitapi
+      - .:/dev/git_api_vis
     command: >
-              sh -c "npm i --save concurrently -g && yarn dev"
+              sh -c "npm i && npm start"
