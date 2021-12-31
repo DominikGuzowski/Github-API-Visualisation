@@ -3,7 +3,21 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip} from 'rechar
 import "../css/Tooltip.css";
 
 const COLORS = ['#238636', '#c2c3c5'];
-
+const RADIAN = Math.PI / 180;                    
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name }) => {
+  const radius = outerRadius * 0.95;// * 1.35;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+  const left = midAngle >= 90 && midAngle <= 270;
+  const angle = left ? 180 - midAngle : -midAngle;
+  const displayName = name.length > 14 ? name.substring(0, 12) + "..." : name;
+  return (
+    <text style={{pointerEvents:"none"}} transform={`translate(${x},${y}) rotate(${angle})`} fill={index % 2 === 0 ? "white" : "black"} 
+    textAnchor={!left ? "end" : "start"} dominantBaseline="central" fontSize="0.9rem">
+        {displayName}
+    </text>
+  );
+};
 export const SunburstChart = ({dataSet, dataKey, username, onClick}) => {
     const CustomTooltip = ({ active, payload }) => {
       if (active && payload && payload.length) {
@@ -25,19 +39,21 @@ export const SunburstChart = ({dataSet, dataKey, username, onClick}) => {
     return (
     <ResponsiveContainer width="95%" aspect={1.5}>
     <PieChart>
-        <text x='50%' y='50%' textAnchor="middle" fontSize={12} dominantBaseline="middle" fill="white">
+        {/* <text x='50%' y='50%' textAnchor="middle" fontSize={12} dominantBaseline="middle" fill="white">
             {username}
-        </text>
+        </text> */}
         <Pie
-            stroke='#0000'
+            stroke='#0d1117'
+            strokeWidth={5}
             data={dataSet}
             cx="50%"
             cy="50%"
-            label={customLabel}
-            outerRadius={'70%'}
+            label={renderCustomizedLabel}
+            outerRadius={'100%'}
             dataKey={dataKey}
-            paddingAngle={dataSet.length === 1 ? 0 : 5}
-            innerRadius={'40%'}
+            labelLine={false}
+            paddingAngle={dataSet.length === 1 ? 0 : 0}
+            // innerRadius={'20%'}
             isAnimationActive={false}
             fontWeight={400}
         >

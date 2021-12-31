@@ -1,6 +1,21 @@
 import React from 'react';
-import { LineChart as LineGraph, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart as LineGraph, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import "../css/Tooltip.css";
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload) {
+    return (
+      <div className="custom-tooltip">
+        <span className="label" style={{textAlign:"center"}}>{`${payload[0].payload.name}`}</span>
+        <div style={{display:"flex", flexDirection:"column", gap: "0.25rem", padding:"0.25rem", 
+                     backgroundColor:"#161b22", borderRadius:"0.25rem", border:"1px solid #30363d"}}>
+          {payload.map(x => <span key={x.name} style={{color:x.color, fontWeight:"bold"}}>{x.name}: <span style={{color:"#f0f6fc", fontWeight:"normal"}}>{x.value}</span></span>)} 
+        </div>
+      </div>
+    );
+  }
 
+  return null;
+};
 export const LineChart = ({dataSet, dataKeys, xAxisKey, yAxisKey}) => {
     const colorPalette = [
         "#C486FF",
@@ -25,9 +40,9 @@ export const LineChart = ({dataSet, dataKeys, xAxisKey, yAxisKey}) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xAxisKey} fontSize={'75%'} fontWeight={400} />
               <YAxis dataKey={yAxisKey} fontSize={'75%'} fontWeight={400} />
-              <Tooltip separator=': '/>
+              <Tooltip separator=': ' content={<CustomTooltip /> }/>
               {/* <Legend /> */}
-              {dataKeys?.map((key, i) => <Line type="monotone" dataKey={key} strokeWidth={1.25} stroke={colorPalette[i%colorPalette.length]} dot={false} />)}
+              {dataKeys?.map((key, i) => <Line type="monotone" dataKey={key} strokeWidth={1.5} stroke={`hsl(${(59*i) % 256}, 55%, 50%)`/*colorPalette[i%colorPalette.length]*/} dot={false} />)}
               </LineGraph>
           </ResponsiveContainer>
         </div>

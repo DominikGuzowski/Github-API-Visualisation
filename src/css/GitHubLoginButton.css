@@ -40,7 +40,7 @@
 }
 
 .github-login-button:focus-visible {
-    box-shadow: 0 0 0 0.125em white;
+    box-shadow: 0 0 0 0.125em #f0f6fc;
     background-color: #008dd3;
 }
 .github-login-button:active {

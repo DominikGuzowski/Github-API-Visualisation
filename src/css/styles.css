@@ -49,7 +49,7 @@
 
 .contrib-options:checked {
     background-color: var(--clr-main);
-    color: white;
+    color: #f0f6fc;
 }
 
 .contrib-options:disabled {

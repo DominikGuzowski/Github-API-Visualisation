@@ -6,7 +6,7 @@
     padding: 0.25em;
     aspect-ratio: 1;
     border-radius: 0.25em;
-    color: white;
+    color: #f0f6fc;
     background-color: #238636;
     border: none;
     font-size: 1.1em;
@@ -22,7 +22,7 @@
 
 .arrow-button:focus-visible {
     background-color: #008dd3;
-    box-shadow: 0 0 0 0.125em white;
+    box-shadow: 0 0 0 0.125em #f0f6fc;
 }
 
 .arrow-button:active {

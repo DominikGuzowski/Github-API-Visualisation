@@ -78,7 +78,7 @@ body {
 }
 
 .content-pane {
-    color: white;
+    color: #f0f6fc;
     display: flex;
     flex-flow: column;
     background-color: #0d1117;
@@ -209,7 +209,7 @@ body {
     flex: 1 1;
     border:none;
     font-size: 1em;
-    color: white;
+    color: #f0f6fc;
     border-radius: 0.25em;
     background-color: var(--clr-main);
     padding: 0.25em 0.75em;
@@ -235,7 +235,7 @@ body {
 
 .toggle-button:focus-visible {
     background-color: #008dd3;
-    box-shadow: 0 0 0 0.125em white;
+    box-shadow: 0 0 0 0.125em #f0f6fc;
 }
 
 
@@ -248,7 +248,7 @@ body {
     border: none;
     outline: none;
     background-color: #30363d;
-    color: white;
+    color: #f0f6fc;
     border-radius: 0.25rem;
     padding: 0.5em 1em;
     /* font-size: 1.05rem; */

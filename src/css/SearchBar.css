@@ -44,7 +44,7 @@
     min-width: 1em;
     aspect-ratio: 1;
     border-radius: 0.3em;
-    color: white;
+    color: #f0f6fc;
     padding: 0.5em;
     background-color: var(--clr-main);
     transition: background-color 100ms;

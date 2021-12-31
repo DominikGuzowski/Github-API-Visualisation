@@ -77,15 +77,15 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
     if(!dataSet || dataSet.length === 0)  return (
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
-    return <ResponsiveContainer width="95%" aspect={1.5}>
+    return <ResponsiveContainer width="95%" aspect={1}>
         <PieGraph>
         <Pie
             stroke='none'
             data={dataSet}
             cx="50%"
             cy="50%"
-            label={labelPercent}
-            outerRadius={'60%'}
+            // label={labelPercent}
+            outerRadius={'90%'}
             fill="#8884d8"
             dataKey={valueKey}
             activeShape={hoverSector}
@@ -99,7 +99,7 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
                 <Cell key={`cell-${index}`} fill={entry.color || COLORS[index % COLORS.length]}>{entry.name}</Cell>
             ))}
         </Pie>
-        {/* <Legend fontWeight={400}/> */}
+        <Legend fontWeight={400}/>
         <Tooltip content={<CustomTooltip />}/>
         </PieGraph>
     </ResponsiveContainer>
