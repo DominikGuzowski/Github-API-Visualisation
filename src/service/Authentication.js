@@ -1,10 +1,18 @@
-import { getAuth, signOut, signInWithPopup, GithubAuthProvider, signInWithRedirect, signInAnonymously } from "firebase/auth";
+import { getAuth, signOut, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 import firebase from "../config/FirebaseConfig";
 const githubProvider = new GithubAuthProvider();
 
-export const auth = getAuth(firebase);
+let auth = null;
+try {
+  auth = getAuth(firebase);
+} catch(err) {
+  console.error(err);
+}
+
+export default auth;
 export const authentication = async () => {
-    return signInWithPopup(auth, githubProvider)
+    if(!auth) alert("GitHub login is not available.")
+    else return signInWithPopup(auth, githubProvider)
       .then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
