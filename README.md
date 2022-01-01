@@ -23,12 +23,12 @@ cd ./GitHub-API-Visualisation
 
 In the project directory add a .env with the following information:
 ```
-REACT_APP_FIREBASE_API_KEY=*< Your Firebase Project API Key >*
-REACT_APP_FIREBASE_DOMAIN=*< Your Firebase Project Domain >*
-REACT_APP_FIREBASE_PROJECT_ID=*< Your Firebase Project ID >*
-REACT_APP_FIREBASE_STORAGE_BUCKET=*< Your Firebase Project Storage Bucket >*
-REACT_APP_FIREBASE_SENDER_ID=*< Your Firebase Message Sender ID >*
-REACT_APP_FIREBASE_APP_ID=*< Your Firebase App ID >*
+REACT_APP_FIREBASE_API_KEY=<Your Firebase Project API Key>
+REACT_APP_FIREBASE_DOMAIN=<Your Firebase Project Domain>
+REACT_APP_FIREBASE_PROJECT_ID=<Your Firebase Project ID>
+REACT_APP_FIREBASE_STORAGE_BUCKET=<Your Firebase Project Storage Bucket>
+REACT_APP_FIREBASE_SENDER_ID=<Your Firebase Message Sender ID>
+REACT_APP_FIREBASE_APP_ID=<Your Firebase App ID>
 ```
 #### 4. Run the app.
 ```

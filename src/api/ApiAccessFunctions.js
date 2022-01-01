@@ -71,7 +71,7 @@ export const fetchUserRepos = async (repoOwner = user()) => {
     if(!repoOwner) return { error: "Error: User required."};
     const token = getToken();
     let { success, error } = await fetchGitHubData(`/users/${repoOwner}/repos?per_page=100`, {validated: validate(token, repoOwner), token});
-    console.warn(success);
+    if(error) return { error };
     success = success.map(({name}) => name);
     return {success: {
         owner: repoOwner,
@@ -90,15 +90,6 @@ export const fetchUserContributions = async (username = user()) => {
                     query: contributionsQuery(username)
                 }
             });
-            
-            // let resContributions = [];
-            // for (const c of contributions) {
-            //     let { success } = await fetchRepoContributors(c.name, c.owner.login);
-            //     if(success?.data?.length > 1) {
-            //         resContributions.push(c);
-            //     }
-            // }
-            // console.log("FINISHED");
            return { success: { username, contributions } };
         } catch (err) {
             console.error(err)
@@ -142,14 +133,12 @@ export const fetchFollowers = async (username = user()) => {
 }
 export const fetchPagedFollowers = async (username = user(), page = 1) => {
     if(page < 1) return { error: "Page not found."};
-    console.log(page)
     if(!username) return { error: "Error: User required."};
     const token = getToken();
     return await fetchGitHubData(`/users/${username}/followers?per_page=20&page=${page}`, {validated: validate(token, username), token});
 }
 export const fetchPagedFollowing = async (username = user(), page = 1) => {
     if(page < 1) return { error: "Page not found."};
-    console.log(page)
     if(!username) return { error: "Error: User required."};
     const token = getToken();
     return await fetchGitHubData(`/users/${username}/following?per_page=20&page=${page}`, {validated: validate(token, username), token});
@@ -302,21 +291,6 @@ export const fetchRepoStatsCommits = async (repo, owner = user()) => {
     }
     return { success: { dayOfWeek, repo } }
 }
-export const fetchRepoStatsContributors = async (repo, owner = user()) => {
-    const token = getToken();
-    let { success } = await fetchGitHubData(`/repos/${owner}/${repo}/stats/contributors`, {validated: validate(token, owner), token});
-    let dayOfWeek = [0, 0, 0, 0, 0, 0, 0];
-    // for (const {days} of success) {
-    //     dayOfWeek[0] += days[1];
-    //     dayOfWeek[1] += days[2];
-    //     dayOfWeek[2] += days[3];
-    //     dayOfWeek[3] += days[4];
-    //     dayOfWeek[4] += days[5];
-    //     dayOfWeek[5] += days[6];
-    //     dayOfWeek[6] += days[0];
-    // }
-    return { success: dayOfWeek }
-}
 
 export const fetchYearContributions = async (username = user()) => {
     const {data: {data: {user: {contributionsCollection: {contributionCalendar}}}}} = await axios({
@@ -417,7 +391,6 @@ export const fetchUserLanguagesGQL = async (username = user()) => {
             query: userLanguages(username)
         }
     })
-    console.log(res)
     let data = extractInfo(res);
     let languages = {
         totalSize: 0

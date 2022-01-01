@@ -13,10 +13,12 @@ export const HamburgerButton = ({onClick, toggled}) => {
     React.useEffect(() => {
         onClick?.(squished === "squished");
         toggleSquish("");
+        // eslint-disable-next-line
     }, [toggled]);
 
     React.useEffect(() => {
         onClick?.(false);
+        // eslint-disable-next-line
     }, []);
     const [squished, toggleSquish] = React.useState("squished");
     return (

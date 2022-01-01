@@ -4,7 +4,42 @@ import "../css/piechart.css";
 import "../css/Tooltip.css";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF49A9', '#FF2042', '#AA80FF', '#20CC48', '#FFEE10'];
-
+const hoverSector = (props) => {
+    const {
+        cx,
+        cy,
+        innerRadius,
+        outerRadius,
+        startAngle,
+        endAngle,
+        fill
+      } = props;
+    return (
+        <Sector
+          style={{transition:"opacity 200ms linear"}}
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          opacity={0.8}
+          fill={fill}
+        />
+      );
+}
+const CustomTooltip = ({ active, payload, total}) => {
+    if (active && payload && payload.length) {
+      return (
+          <div className='custom-tooltip'>
+              <span className="label">{payload[0].name}</span>
+              <span><b>Size: </b>{payload[0].value} bytes</span>
+              <span><b>Share: </b>{(payload[0].value / total * 100).toFixed(3)}%</span>
+          </div>
+      );
+    }
+    return null;
+};
 export const PieChart = ({dataSet: data, valueKey, total}) => {
     const [dataSet, setData] = React.useState([]);
 
@@ -32,48 +67,6 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
     const onMouseLeave = React.useCallback((data, index) => {
       setActiveIndex(null);
     }, []);
-    const hoverSector = (props) => {
-        const {
-            cx,
-            cy,
-            innerRadius,
-            outerRadius,
-            startAngle,
-            endAngle,
-            fill
-          } = props;
-        return (
-            <Sector
-              style={{transition:"opacity 200ms linear"}}
-              cx={cx}
-              cy={cy}
-              innerRadius={innerRadius}
-              outerRadius={outerRadius}
-              startAngle={startAngle}
-              endAngle={endAngle}
-              opacity={0.8}
-              fill={fill}
-            />
-          );
-    }
-    const CustomTooltip = ({ active, payload}) => {
-        if (active && payload && payload.length) {
-          return (
-              <div className='custom-tooltip'>
-                  <span className="label">{payload[0].name}</span>
-                  <span><b>Size: </b>{payload[0].value} bytes</span>
-                  <span><b>Share: </b>{(payload[0].value / total * 100).toFixed(3)}%</span>
-              </div>
-          );
-        }
-        return null;
-    };
-
-    const labelPercent = (entry) => {
-        let percent = (total?(entry.value/total*100):0);
-        percent = percent < 0.1 ? 0.1 : percent;
-        return `${entry.name}: ${total? percent.toFixed(1) + "%":""}`;
-    }
     if(!dataSet || dataSet.length === 0)  return (
         <h1 style={{color:"#aaa"}}>No data available</h1>
     )
@@ -100,7 +93,7 @@ export const PieChart = ({dataSet: data, valueKey, total}) => {
             ))}
         </Pie>
         <Legend fontWeight={400}/>
-        <Tooltip content={<CustomTooltip />}/>
+        <Tooltip content={<CustomTooltip total={total}/>}/>
         </PieGraph>
     </ResponsiveContainer>
 };

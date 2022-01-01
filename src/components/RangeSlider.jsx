@@ -33,6 +33,7 @@ export const RangeSlider = ({min, max, gap, onUpdate, labels, showLabels}) => {
         const rangeInput = document.querySelectorAll(".range-input input");
         rangeInput[0].value = min;
         rangeInput[1].value = max;
+        //eslint-disable-next-line
     }, []);
 
 

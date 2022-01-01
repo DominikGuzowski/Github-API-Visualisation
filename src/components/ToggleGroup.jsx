@@ -15,6 +15,7 @@ export const ToggleGroup = ({group = [], onUpdate}) => {
         if(group.length > 0 && state.length !== group.length) {
             init();
         }
+        //eslint-disable-next-line
     }, [group]);
 
     if(!group || group.length === 0) return null;
@@ -28,7 +29,7 @@ export const ToggleGroup = ({group = [], onUpdate}) => {
 
 
 const toggle = (label,  index, states, update) => {
-    return <div className={`toggle-wrapper`}>
+    return <div className={`toggle-wrapper`} key={"toggle_"+index}>
                 <span>{label}</span>
                 <div className={`toggle-switch ${(states[index])?"on":"off"}`} onClick={() => {
                     let temp = states.slice();

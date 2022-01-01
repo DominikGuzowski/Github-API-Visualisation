@@ -6,7 +6,6 @@ export const ContentPane = ({header, children, isLoading}) => {
             <div className={`content-pane-header${isLoading ? " loading" : ""}`}><span>{header}</span></div>
             <div className='content-pane-body'>
                 {isLoading ? <div className='loading-animation'>Fetching data...</div> : children}
-                {/* // {children}   */}
             </div>
         </div>
     );

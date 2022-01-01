@@ -17,8 +17,6 @@ export const Aside = ({children, isLoading, visible, setVisible}) => {
     return (
         <div className={`aside ${visibility && visible && "visible"}`} onClick={() => {
             if(visibility) setVisible?.();
-            console.log("CLICKED")
-            // setVisibility(false);
         }}>
             <span className={`aside-title${isLoading ? " loading" : ""}`}>Public Repositories</span>
             <div className='aside-list'>

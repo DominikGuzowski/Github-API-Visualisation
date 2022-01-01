@@ -1,9 +1,9 @@
 import React from 'react'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import "../css/Tooltip.css"
 
   
-export const Areachart = ({data, dataKeyOne, dataKeyTwo, xAxisKey}) => {
+export const Areachart = ({data, dataKeyOne, dataKeyTwo}) => {
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
           return (
@@ -36,7 +36,6 @@ export const Areachart = ({data, dataKeyOne, dataKeyTwo, xAxisKey}) => {
                         <stop offset="95%" stopColor="#f02030" stopOpacity={0}/>
                     </linearGradient>
                 </defs>
-                {/* <XAxis dataKey={xAxisKey}/> */}
                 <YAxis fontWeight={400} fontSize='0.8em'/>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip content={<CustomTooltip/>} />

@@ -1,5 +1,4 @@
 import React from 'react'
-// import { fetchYearContributions, fetchYearContributionsFrom } from '../api/ApiAccessFunctions';
 import "../css/HeatMap.css";
 
 const colorMap = {
@@ -8,7 +7,7 @@ const colorMap = {
     '#40c463': 'rgb(0, 109, 50)',
     '#30a14e': 'rgb(38, 166, 65)',
     '#216e39': 'rgb(57, 211, 83)'
-}
+};
 
 const months = [
     "Jan",
@@ -25,28 +24,12 @@ const months = [
     "Dec"
 ];
 export const HeatMap = ({contributions }) => {
-    // eslint-disable-next-line no-extend-native
-    Date.prototype.offsetYear = function(offset) {
-        this.setFullYear(this.getFullYear() + offset);
-        return this;
-    }
-    // eslint-disable-next-line no-extend-native
-    Date.prototype.next = function() {
-        this.setFullYear(this.getFullYear(), this.getMonth(), this.getDate() + 1);
-        return this;
-    }
-    // eslint-disable-next-line no-extend-native
-    Date.prototype.day = function() {
-        return (this.getDay() + 6) % 7;
-    }
-    //'#161b22' '#9be9a8', '#40c463', '#30a14e', '#216e39'
-    // const [contributions, setContributions] = React.useState([]);
     const createCells = () => {
         const weeks = [];
         let key = 0;
         let mon = "";
 
-        weeks.push(<div className='heatmap-week days'>
+        weeks.push(<div className='heatmap-week days' key="week-names">
             <div className='heatmap-day head'>{" "}</div>
             <div className='heatmap-day weekday'>{" "}</div>
             <div className='heatmap-day weekday'>Mon</div>
@@ -81,7 +64,6 @@ export const HeatMap = ({contributions }) => {
                     />})}
             </div>);
         }
-        console.log()
         return <div className='heatmap'>{weeks.map(x => x)}</div>
 
     }
@@ -89,7 +71,7 @@ export const HeatMap = ({contributions }) => {
     const emptyDay = (upTo) => {
         let arr = [];
         for(let i = 0; i < upTo; i++) {
-            arr.push(<div className='heatmap-day no-hover'/>)
+            arr.push(<div key={`empty_${i}`} className='heatmap-day no-hover'/>)
         }
         return arr;
     }
@@ -100,7 +82,7 @@ export const HeatMap = ({contributions }) => {
             {createCells()}
             <div className='heatmap-legend'>
                 <div className='heatmap-day no-hover'>Less</div>
-                {Object.values(colorMap).map(x => <div key={x} className='heatmap-day no-hover' style={{backgroundColor:x}}/>)}
+                {Object.values(colorMap).map((x, i) => <div key={i} className='heatmap-day no-hover' style={{backgroundColor:x}}/>)}
                 <div className='heatmap-day no-hover'>More</div>
             </div>
         </div>

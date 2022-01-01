@@ -7,7 +7,6 @@ import { ContentPane } from '../components/ContentPane';
 import { PieChart } from '../components/PieChart';
 import { MainTitle } from '../components/MainTitle';
 import { Header } from '../components/Header';
-import {FaGithub} from "react-icons/fa";
 import { SearchBar } from '../components/SearchBar';
 import { Aside } from "../components/Aside";
 import { MainBody } from "../components/MainBody";
@@ -27,10 +26,42 @@ import { LanguageList } from '../components/LanguageList';
 import { HamburgerButton } from '../components/HamburgerButton';
 import { RangeSlider } from '../components/RangeSlider';
 import { ToggleGroup } from '../components/ToggleGroup';
+
 export const Main = () => {
+
+    const [hamburgerToggle, setHamburgerToggle] = React.useState(0);
+    const [asideVisible, setVisible] = React.useState(false);
+    const [followers, setFollowers] = React.useState([]);
+    const [followersLoading, setFollowersLoading] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState("");
+    const [currentUserLoading, setCurrentUserLoading] = React.useState(false);
+    const [contr, setContr] = React.useState({});
+    const [lang, setLang] = React.useState({});
+    const [langLoading, setLangLoading] = React.useState(false);
+    const [repos, setRepos] = React.useState({});
+    const [reposPage, setReposPage] = React.useState(1);
+    const [reposLoading, setReposLoading] = React.useState(false);
+    const [contributions, setContributions] = React.useState([]);
+    const [contributionsLoading, setContributionsLoading] = React.useState(false);
+    const [codeFreq, setCodeFreq] = React.useState([]);
+    const [codeFreqLoading, setCodeFreqLoading] = React.useState(false);
+    const [commitDays, setCommitDays] = React.useState({});
+    const [commitDaysLoading, setCommitDaysLoading] = React.useState(false);
+    const [following, setFollowing] = React.useState([]);
+    const [followingLoading, setFollowingLoading] = React.useState(false);
+    const [followersPage, setFollowersPage] = React.useState(1);
+    const [followingPage, setFollowingPage] = React.useState(1);
+    const [userRepoContributions, setRepoContributions] = React.useState([]);
+    const [userActivity, setUserActivity] = React.useState([]);
+    const [pieToggle, setPieToggle] = React.useState(true);
+    const [contributionTimeline, setTimeline] = React.useState([]);
+    const [timelineLoading, setTimelineLoading] = React.useState(false);
+    const [monthRange, setMonthRange] = React.useState([0, 11]);
+    const [timelineKeys, setTimelineKeys] = React.useState([]);
+    const [timelineData, setTimelineData] = React.useState([]);
+
     const fetchUserReposPaged = (username) => {
         if(!username) {
-            console.log(username, "ERROR")
             return;
         }
         setReposLoading(true);
@@ -54,7 +85,6 @@ export const Main = () => {
         }).catch((e) => {console.error(e); setReposLoading(false)});
     }
     const fetchNewUser = async (username) => {
-        git.fetchPagedRepos(username, 1).then(console.warn)
         setCurrentUserLoading(true);
         git.fetchUser(username).then(({success: gitUser, error}) => {
             setCurrentUserLoading(false);
@@ -90,7 +120,6 @@ export const Main = () => {
             git.fetchUserLanguagesGQL(user).then(({success}) => {
                 setLangLoading(false);
                 if(success) setLang(success);
-                console.log(success)
             });
             fetchUserReposPaged(user);
             setFollowersLoading(true);
@@ -164,38 +193,6 @@ export const Main = () => {
         setTimelineKeys([]);
         setTimelineData([]);
     };
-    const [hamburgerToggle, setHamburgerToggle] = React.useState(0);
-    const [asideVisible, setVisible] = React.useState(false);
-    const [followers, setFollowers] = React.useState([]);
-    const [followersLoading, setFollowersLoading] = React.useState(false);
-    const [currentUser, setCurrentUser] = React.useState("");
-    const [currentUserLoading, setCurrentUserLoading] = React.useState(false);
-    const [contr, setContr] = React.useState({});
-    const [contrLoading, setContrLoading] = React.useState(false);
-    const [commits, setCommits] = React.useState({});
-    const [lang, setLang] = React.useState({});
-    const [langLoading, setLangLoading] = React.useState(false);
-    const [repos, setRepos] = React.useState({});
-    const [reposPage, setReposPage] = React.useState(1);
-    const [reposLoading, setReposLoading] = React.useState(false);
-    const [contributions, setContributions] = React.useState([]);
-    const [contributionsLoading, setContributionsLoading] = React.useState(false);
-    const [codeFreq, setCodeFreq] = React.useState([]);
-    const [codeFreqLoading, setCodeFreqLoading] = React.useState(false);
-    const [commitDays, setCommitDays] = React.useState({});
-    const [commitDaysLoading, setCommitDaysLoading] = React.useState(false);
-    const [following, setFollowing] = React.useState([]);
-    const [followingLoading, setFollowingLoading] = React.useState(false);
-    const [followersPage, setFollowersPage] = React.useState(1);
-    const [followingPage, setFollowingPage] = React.useState(1);
-    const [userRepoContributions, setRepoContributions] = React.useState([]);
-    const [userActivity, setUserActivity] = React.useState([]);
-    const [pieToggle, setPieToggle] = React.useState(true);
-    const [contributionTimeline, setTimeline] = React.useState([]);
-    const [timelineLoading, setTimelineLoading] = React.useState(false);
-    const [monthRange, setMonthRange] = React.useState([0, 11]);
-    const [timelineKeys, setTimelineKeys] = React.useState([]);
-    const [timelineData, setTimelineData] = React.useState([]);
 
     const onToggleChange = (change) => {
         const newKeys = contributionTimeline.dataKeys.filter((_, i) => change[i]).sort();
@@ -234,6 +231,7 @@ export const Main = () => {
 
         document.addEventListener("keydown", focusListener);
         return (() => document.removeEventListener("keydown", focusListener));
+        //eslint-disable-next-line
     }, []);
 
     return (

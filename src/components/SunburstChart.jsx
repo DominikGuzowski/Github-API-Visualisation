@@ -1,5 +1,5 @@
 import React from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip} from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from 'recharts';
 import "../css/Tooltip.css";
 
 const COLORS = ['#238636', '#c2c3c5'];
@@ -18,30 +18,24 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     </text>
   );
 };
+
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <span className="label" style={{textAlign:"center"}}>{`${payload[0].name}`}</span>
+      </div>
+    );
+  }
+  
+  return null;
+};
+
 export const SunburstChart = ({dataSet, dataKey, username, onClick}) => {
-    const CustomTooltip = ({ active, payload }) => {
-      if (active && payload && payload.length) {
-        return (
-          <div className="custom-tooltip">
-            <span className="label" style={{textAlign:"center"}}>{`${payload[0].name}`}</span>
-          </div>
-        );
-      }
-      
-      return null;
-    };
-
-    const customLabel = (entry) => {
-      return `${entry.name}`;
-    }
-
     if(!dataSet || dataSet.length === 0) return <h1 style={{color:"#aaa"}}>No data available</h1>;
     return (
     <ResponsiveContainer width="95%" aspect={1.5}>
     <PieChart>
-        {/* <text x='50%' y='50%' textAnchor="middle" fontSize={12} dominantBaseline="middle" fill="white">
-            {username}
-        </text> */}
         <Pie
             stroke='#0d1117'
             strokeWidth={5}
@@ -53,7 +47,6 @@ export const SunburstChart = ({dataSet, dataKey, username, onClick}) => {
             dataKey={dataKey}
             labelLine={false}
             paddingAngle={dataSet.length === 1 ? 0 : 0}
-            // innerRadius={'20%'}
             isAnimationActive={false}
             fontWeight={400}
         >

@@ -8,7 +8,7 @@ export const LanguageList = ({languages, total}) => {
     return (
         <ol className='language-list'>
             {languages?.map(({name, value, color}, i) => {
-                return <li>
+                return <li key={name}>
                     <div className="numbering" style={{color: i === 0 ? "gold" :
                                                               i === 1 ? "silver" :
                                                               i === 2 ? "#CD7F32" : "#50565d"}}>{i+1}.</div>
